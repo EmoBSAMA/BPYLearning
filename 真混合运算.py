@@ -31,6 +31,7 @@ time_f=0
 mode=''
 mode_c=''
 mode_list=['1','2','3','4','exit','test1','test2','test3','test4']
+dif=''
 
 #题型判断
 tixing=0
@@ -80,7 +81,7 @@ def mode_1_ran():#大整数连续加减_加数随机_加减随机
         print('正确答案：' + str(ans_t1))
     
 #打印题目（没问题）
-def mode_print_1():
+def mode_1_print():
     global que_long,que_list_1,que_list_2
 
     if mode[0:4] == 'test':
@@ -109,6 +110,30 @@ def mode_print_1():
             print(str(que_list_1[i+1]),sep='',end='')
         print(" = ?",sep='')
 
+def mode_2_ran():
+    global que_long,que_list_1,que_list_2,ans_t1
+    que_long = random.randint(2,6)#1-5
+    for i in range(0,que_long):
+        que_list_1[i]=random.randint(1,100)
+    for i in range(0,que_long-1):
+        que_list_2[i]=random.randint(0,1)
+    #计算题目得数
+
+    ans_t1 = que_list_1[0]
+    
+    for i in range(0,que_long-1):
+        if que_list_2[i] == 0:
+            ans_t1 += que_list_1[i+1]
+        else:
+            ans_t1 -= que_list_1[i+1]
+    ans_t1 /= 10
+    ans_t1= round(ans_t1,1)
+    for i in range(0,que_long):
+        que_list_1[i] /= 10
+        que_list_1[i] = round(que_list_1[i],1)
+    if mode[0:4] == 'test':
+        print('正确答案：' + str(ans_t1))
+
 def mode_ans():#玩家回答
     global ans_1,ans_2,mode,tixing
 
@@ -133,7 +158,7 @@ def mode_1():#大整数连续加减
     mode_1_ran()
     
     #打印题目
-    mode_print_1()
+    mode_1_print()
 
     #回答问题
     mode_ans()
@@ -154,7 +179,28 @@ def mode_1():#大整数连续加减
 def mode_2():#一位小数连续加减
     global que_list_1,que_list_2,ans_a,ans_2,que_long,que_tf,time_t,time_f,choose
     clean()
+    time_t += 1
 
+    #生成题目  
+    mode_2_ran()
+    
+    #打印题目
+    mode_1_print()
+
+    #回答问题
+    mode_ans()
+
+    #答案判断
+    while que_tf ==False:
+        if ans_1 != str(ans_t1):
+            que_tf=False
+            time_f += 1
+            ans_pd()
+            mode_print_1()
+            mode_ans()
+        else:
+            que_tf=True
+            ans_pd()
     
 def mode_3():#两位数乘法以及一位数除法带商
     global que_list_1,que_list_2,que_1,que_2,que_long,que_tf,time_t,time_f,choose
