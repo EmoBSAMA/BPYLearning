@@ -5,7 +5,7 @@
 
 模式一：大整数连续加减
 模式二：一位小数连续加减
-模式三：两位数乘法以及一位数除法带商
+模式三：二十以内整数数连续乘法
 模式四：混合模式
 '''
 import random
@@ -133,6 +133,46 @@ def mode_2_ran():
         que_list_1[i] = round(que_list_1[i],1)
     if mode[0:4] == 'test':
         print('正确答案：' + str(ans_t1))
+ 
+def mode_3_ran():#二十以内整数数连续乘法
+    global que_long,que_list_1,que_list_2,ans_t1
+    que_long = random.randint(2,6)
+    for i in range(0,que_long):
+        que_list_1[i]=random.randint(1,21)
+    #计算题目得数
+
+    ans_t1 = que_list_1[0]
+    
+    for i in range(0,que_long):
+        if i == 0:
+            ans_t1 = que_list_1[i]
+        elif i != 0:
+            ans_t1 *= que_list_1[i]
+    if mode[0:4] == 'test':
+        print('正确答案：' + str(ans_t1))
+    
+
+def mode_3_print():
+    global que_long,que_list_1,que_list_2
+
+    if mode[0:4] == 'test':
+        print(str(que_long))
+        print(str(que_list_1))
+    
+    print("\n第"+str(time_t)+"题")
+    #两数相乘
+    if que_long == 0:
+        print(str(que_list_1[0]) + ' × ' + str(que_list_1[1]) + " = ?")
+    else:
+        for i in range(0,que_long):
+            if i == 0:
+                print(str(que_list_1[i]),sep='',end='')
+            if i == que_long - 1:
+                break
+            print(' × ',sep='',end='')
+            print(str(que_list_1[i+1]),sep='',end='')
+        print(" = ?",sep='')
+    
 
 def mode_ans():#玩家回答
     global ans_1,ans_2,mode,tixing
@@ -140,14 +180,12 @@ def mode_ans():#玩家回答
     if mode == '1' or mode == '2' or mode == 'test1' or mode == 'test2':
         ans_1=input('请输入此题得数:')
     elif mode == '3' or mode == 'test3':
-        ans_1=input('请输入此题的商：')
-        ans_2=input('请输入此题的余数:')
+        ans_1=input('请输入此题的积：')
     elif mode == '4' or mode == 'test4':
         if tixing == 1 or tixing == 2:
             ans_1=input('请输入此题得数:')
         if tixing == 3:
-            ans_1=input('请输入此题的商：')
-            ans_2=input('请输入此题的余数:')
+            ans_1=input('请输入此题的积：')
 
 def mode_1():#大整数连续加减
     global que_list_1,que_list_2,ans_a,ans_2,que_long,que_tf,time_t,time_f,choose
@@ -169,7 +207,7 @@ def mode_1():#大整数连续加减
             que_tf=False
             time_f += 1
             ans_pd()
-            mode_print_1()
+            mode_1_print()
             mode_ans()
         else:
             que_tf=True
@@ -196,15 +234,37 @@ def mode_2():#一位小数连续加减
             que_tf=False
             time_f += 1
             ans_pd()
-            mode_print_1()
+            mode_1_print()
             mode_ans()
         else:
             que_tf=True
             ans_pd()
     
-def mode_3():#两位数乘法以及一位数除法带商
-    global que_list_1,que_list_2,que_1,que_2,que_long,que_tf,time_t,time_f,choose
+def mode_3():#两位数乘法
+    global que_list_1,que_list_2,ans_a,ans_2,que_long,que_tf,time_t,time_f,choose
     clean()
+    time_t += 1
+
+    #生成题目  
+    mode_3_ran()
+    
+    #打印题目
+    mode_3_print()
+
+    #回答问题
+    mode_ans()
+
+    #答案判断
+    while que_tf ==False:
+        if ans_1 != str(ans_t1):
+            que_tf=False
+            time_f += 1
+            ans_pd()
+            mode_1_print()
+            mode_ans()
+        else:
+            que_tf=True
+            ans_pd()
 
     
 
@@ -214,7 +274,7 @@ print('欢迎来到小学加减乘除数学题检测加强版\n')
 print('请选择模式')
 print('1.大整数连续加减')
 print('2.一位小数连续加减')
-print('3.两位数乘法以及一位数除法带商')
+print('3.二十以内整数数连续乘法')
 print('4.混合模式'+'\n')
 while not mode in mode_list:
     mode=input()

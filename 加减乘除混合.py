@@ -64,7 +64,9 @@ def p2():#十位小数加减
     b2=random.randint(1,100)
     a2=random.randint(1,100)
     a2=a2/10
+    a2=round(a2,1)
     b2=b2/10
+    b2=round(b2,1)
     c2=a2+b2
     while e2==0:
         print("第"+str(time_t)+"题")
