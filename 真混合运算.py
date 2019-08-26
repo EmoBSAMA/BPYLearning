@@ -140,7 +140,7 @@ def mode_3_ran():#二十以内整数数连续乘法
     for i in range(0,que_long):
         que_list_1[i]=random.randint(1,21)
     #计算题目得数
-
+    ans_t1 = 0
     ans_t1 = que_list_1[0]
     
     for i in range(0,que_long):
@@ -234,7 +234,7 @@ def mode_2():#一位小数连续加减
             que_tf=False
             time_f += 1
             ans_pd()
-            mode_1_print()
+            mode_2_print()
             mode_ans()
         else:
             que_tf=True
@@ -260,7 +260,7 @@ def mode_3():#两位数乘法
             que_tf=False
             time_f += 1
             ans_pd()
-            mode_1_print()
+            mode_3_print()
             mode_ans()
         else:
             que_tf=True
